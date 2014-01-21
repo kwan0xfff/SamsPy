@@ -1,0 +1,76 @@
+==================
+Overview of SamsPy
+==================
+
+*Samspy* is envisioned as a collection of simple aerospace models (SAMS)
+in Python (PY).
+
+The initial models provided deal with idealized multistage rocket performance.
+Effects of gravity and planetary atmosphere are not included.
+
+Samspy is written in Python 3.  Package requirements for Linux (Ubuntu 12.04)
+and Mac OS X (via MacPorts) are given at the bottom of this write-up.  (See
+"Requirements" below.)
+
+Example
+=======
+
+Examples of user input are provided in the *share* subdirectory as YAML files.
+
+  * *propellants.yaml* is a selection of possible propellant combinations.
+    Information is provided about liquid densities, ratios of oxidizer to fuel,
+    specific impulse, etc.
+
+  * *protolv.yaml* is a three-stage prototype launch vehicle with a small payload.
+
+These files can be used as input to the *lvbasic.py* command, a launch vehicle
+basic analysis tool.  To use, the Samspy library modules need to be available
+to the command.  The simplest way to do this is to set the PYTHONPATH
+environment variable.  For example, assume that SAMSPYROOT represents the top
+of the Samspy source tree::
+
+  $ export PYTHONPATH=${SAMSPYROOT}/lib
+
+Then if executed from there::
+
+  $ cmds/lvbasic.py -p share/propellants.yaml share/protolv.yaml
+
+The result should be a listing of propellant and performance data for
+each stage, along with the delta V (velocity change) achievable from
+the specified vehicle.
+
+Testing and Static Analysis
+===========================
+
+Samspy utilizes the Python 3 unittest package to help ensure code quality.
+Additionally, it depends on the "nose" framework to drive the tests.
+To run tests from top of the samspy code tree::
+
+  $ ( cd tests; ./runtests.sh )
+
+A modest amount of static checking has been performed using "pylint".  On
+some platforms, pylint for Python 3 has some difficulties in installation.
+For the moment, checking was done using "pylint" for Python 2.
+
+Requirements
+============
+
+The Samspy run-time environment requires certain prequisite Python 3
+packages.  Below are the packages, with their names on Ubuntu 12.04.
+(These names should apply to other Ubuntu and Debian systems as well.)
+
+  * python3 - Python 3 interactive high-level programming language
+  * python3-yaml -- YAML parser and emitter for Python3
+  * python3-nose -- test framework for Python unittest
+
+On Linux, Samspy was tested on Ubuntu 12.04.4. The Python 3 version is 3.2.3.
+
+For Mac OS X systems, these packages can be installed using MacPorts.
+The corresponding names for Python 3.2 are: python32, py32-yaml, py32-nose
+
+Documetation
+============
+
+Like much of the current package, documentation is sparse.  However, pages
+are currently crafted in the format of "reStructuredText" and can be
+converted to reasonable HTML.  No CSS file is yet provided for it.

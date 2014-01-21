@@ -1,0 +1,95 @@
+# Propellants
+#
+# Measures in meters, kilograms, seconds
+#
+# ... and then there's specific impulse...
+# (in imperial units, lbf*sec/lbm = sec)
+#
+
+#
+# Propellant mixtures:
+#
+# components = [ oxidizer, fuel ]
+# isp = specific impulse, sec
+# OFR = oxidizer/fuel mass ratio
+# isp-vac = specific impulse in vacuum, sec
+# isp-sl = specific impulse at sea level, sec
+# temp-combust: combustion temperature, deg K
+#
+# Note: the basic fields needed are:
+# name, components, isp (or isp-vac, isp-sl), and OFR
+# Additional info is added for possible future program expansion.
+# 
+
+mixtures:
+    lox-lnh3:
+        name: LOX/ammonia
+        components: [ LOX, LNH3 ]
+        isp: 260.0
+    lox-lh2:
+        name: LOX/hydrogen
+        components: [ LOX, LH2 ]
+        isp: 450.0      # vacuum
+        temp-combust: 2985 # deg K
+        OFR: 6.0
+    lox-lch4:
+        name: LOX/methane
+        components: [ LOX, LCH4 ]
+    lox-rp1:
+        name: LOX/RP-1 # or LOX/kerosene
+        OFR: 2.56
+        components: [ LOX, RP1 ]
+        isp-vac: 353
+        isp-sl: 300
+        temp-combust: 3670 # deg K
+    lf2-lh2:
+        temp-combust: 3960 # deg K
+        OFR: 8.0
+        components: [ LF2, LH2 ]
+    no2-htpb:
+        name: NO2/HTPB
+        components: [ NO2, HTPB ]
+        notes: hybrid.
+
+#
+# Material properties
+#
+# properties of individual propellant components
+# many component properties found at:  
+# http://www.astronautix.com/props
+#
+# liqdens = liquid density
+# soldens = solid density
+# boilpt = boiling point
+# meltpt = melting point
+#
+matlprops:
+    LOX:
+        liqdens: 1.141 # kg/L
+        boilpt: 90.19 # deg K
+    LCH4:
+        liqdens: 0.422 # kg/L
+        boilpt: 112 # deg K
+    RP1:
+        liqdens: 0.91 # kg/L; really 0.81-1.02
+        boilpt: 420 # deg K
+    LF2:
+        liqdens: 1.510 # kg/L
+        boilpt: 85 # deg K
+    LH2:
+        liqdens: 0.068 # kg/L
+        boilpt: 20 # deg K
+    NO2:
+        liqdens: 1.2 # kg/L, need better info
+        boilpt: 184.67 # deg K
+    HTPB:       # duplicate info from ParaffinWax
+        soldens: 0.9 # kg/L
+        meltpt: 341
+        notes: hydroxyl-terminated polybutadiene
+        # TODO: Need better HTPB properties
+    ParaffinWax:
+        soldens: 0.9 # kg/L
+        meltpt: 341
+        notes: pure paraffin (C25H52)
+
+

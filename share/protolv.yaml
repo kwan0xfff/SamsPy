@@ -1,0 +1,32 @@
+# Launch vehicle profile:  hypothetical Prototype Launch Vehicle
+#
+# Measures in meters, kilograms, seconds
+
+name:  Prototype LV
+stageorder: [ Proto LV-1, Proto LV-2, Proto LV-3, payload ]
+maxG: 3.0
+stages:
+    Proto LV-1:
+        Mwet: 17934.0 # kg
+        Mdry: 2886.0 # kg
+        Isp: 293 # sec
+        mixture: lox-rp1
+        # burntime: 73.0 # sec Isp sea level
+    Proto LV-2:
+        Mwet: 4331.0 # kg
+        Mdry: 416.0 # kg
+        Isp: 290 # sec
+        mixture: lox-rp1
+        # burntime: 73.0 # sec Isp sea level
+    Proto LV-3:
+        Mwet: 985.0 # kg
+        Mdry: 203.0 # kg
+        mixture: lox-rp1
+        Isp: 293 # sec
+        # burntime: 73.0 # sec Isp sea level
+    payload:
+        Mwet: 443.0 # kg
+        Mdry: 443.0 # kg
+        mixture: lox-rp1
+        Isp: 0 # sec
+
