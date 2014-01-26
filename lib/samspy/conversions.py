@@ -3,11 +3,29 @@
 
 "Conversion multiplication factors"
 
-# These are normally loaded by __init__
+import math
 
+
+# unit conversions
 m2ft = 3.2808399        # meters to feet
 lb2kg = 0.45359237      # pounds-mass to kilogams
 N2lb = 0.224808943      # Newtons to pounds
-gEarth = 9.80665        # gravitational accel at sea level (1 G), m/s^2
+gEarth = 9.80665        # 1 G, grav accel at sea level (1 G), m/s^2
+
+
+# math conversion constants
+deg2rad = math.pi / 180.0
+
+
+# time conversion
+def s2hms (sec):
+    "Convert seconds to hours, minutes, seconds."
+    t = sec
+    h = t // 3600.0
+    t -= h * 3600.0
+    m = t // 60.0
+    t -= m * 60.0
+    s = t 
+    return (h, m, s)
 
 # vim: set sw=4 tw=80 :
