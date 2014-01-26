@@ -2,8 +2,8 @@
 #-*- coding: utf-8 -*-
 
 """Describe a super-synchronous maneuver to geostationary orbit.
-Go from low Earth orbit (LEO) to intermediate transfer orbit (ITO)
-to super-synchronous transfer orbit (STO) to geostationary orbit (GEO).
+Go from low Earth orbit (LEO) to super-synchronous transfer orbit (STO)
+to intermediate transfer orbit (ITO) to geostationary orbit (GEO).
 LEO is inclined to equator.
 
 Suffixes on variables and notations:
@@ -27,7 +27,7 @@ geo_sl = geo_r - earth_r        # GEO above sea level
 
 
 def leo_ito_sto_geo (leo_sl, sto_sl, leo_incline):
-    """Characterize the sequence of orbits (LEO, ITO, STO, GEO) by
+    """Characterize the sequence of orbits (LEO, STO, ITO, GEO) by
     velocities and transition delta Vs.  Include plane change due to
     initial LEO inclination.
     """
@@ -43,29 +43,29 @@ def leo_ito_sto_geo (leo_sl, sto_sl, leo_incline):
     leo = orbit.Elliptical(mu=muEarth).set_circular(leo_r)
     leo.fill_params()
 
-    ito = orbit.Elliptical(mu=muEarth, peri=leo_r, apo=sto_apo_r)
-    ito.fill_params()
-
-    sto = orbit.Elliptical(mu=muEarth, peri=geo_r, apo=sto_apo_r)
+    sto = orbit.Elliptical(mu=muEarth, peri=leo_r, apo=sto_apo_r)
     sto.fill_params()
+
+    ito = orbit.Elliptical(mu=muEarth, peri=geo_r, apo=sto_apo_r)
+    ito.fill_params()
 
     geo = orbit.Elliptical(mu=muEarth).set_circular(geo_r)
     geo.fill_params()
 
     velo['leo'] = leo.velo(leo_r)
-    velo['ito_per'] = ito.velo(leo_r)
-    velo['ito_apo'] = ito.velo(sto_apo_r)
-    velo['sto_apo'] = sto.velo(sto_apo_r)
     velo['sto_per'] = sto.velo(leo_r)
+    velo['sto_apo'] = sto.velo(sto_apo_r)
+    velo['ito_apo'] = ito.velo(sto_apo_r)
+    velo['ito_per'] = ito.velo(geo_r)
     velo['geo'] = geo.velo(geo_r)
 
-    deltav['leo_ito'] = math.fabs(velo['ito_per'] - velo['leo'])
-    deltav['ito_sto'] = ito.planechange(sto, incline_rad)
-    deltav['sto_geo'] = math.fabs(velo['geo'] - velo['sto_per'])
+    deltav['leo_sto'] = math.fabs(velo['sto_per'] - velo['leo'])
+    deltav['sto_ito'] = ito.planechange(sto, incline_rad)
+    deltav['ito_geo'] = math.fabs(velo['geo'] - velo['ito_per'])
 
     orbits['leo'] = leo
-    orbits['ito'] = ito
     orbits['sto'] = sto
+    orbits['ito'] = ito
     orbits['geo'] = geo
 
     return velo, deltav, orbits
@@ -73,7 +73,7 @@ def leo_ito_sto_geo (leo_sl, sto_sl, leo_incline):
 def print_shape(orbitname, orbit):
     "Print formatted shape parameters of eccentric orbit."
     msgfmt ="%s smj %5d km ecc %5.3f " + \
-        "[rxp r(asl)] %5d x %5d km (%3d x %3d km)"
+        "[axp r(asl)] %5d x %5d km (%3d x %3d km)"
     print(msgfmt % (orbitname, orbit.semimaj, orbit.eccentricity,
         orbit.apoapsis, orbit.periapsis,
         orbit.apoapsis - earth_r, orbit.periapsis - earth_r))
@@ -98,30 +98,30 @@ def report(velo, dv, orbits):
     "Generate report of maneuver parameters."
 
     leo = orbits['leo']
-    ito = orbits['ito']
     sto = orbits['sto']
+    ito = orbits['ito']
     geo = orbits['geo']
 
     print_period("LEO", leo)
-    print_period("ITO", ito)
     print_period("STO", sto)
+    print_period("ITO", ito)
     print_period("GEO", geo)
 
     print_shape("LEO", leo)
-    print_shape("ITO", ito)
     print_shape("STO", sto)
+    print_shape("ITO", ito)
     print_shape("GEO", geo)
 
     print_velo("LEO", leo.periapsis, velo['leo'])
-    print_velo("ITO", ito.periapsis, velo['ito_per'])
-    print_velo("ITO", ito.apoapsis , velo['ito_apo'])
-    print_velo("STO", sto.apoapsis , velo['sto_apo'])
     print_velo("STO", sto.periapsis, velo['sto_per'])
+    print_velo("STO", sto.apoapsis , velo['sto_apo'])
+    print_velo("ITO", ito.apoapsis , velo['ito_apo'])
+    print_velo("ITO", ito.periapsis, velo['ito_per'])
     print_velo("GEO", geo.periapsis, velo['geo'])
 
-    print_deltav("LEO->ITO", ito.periapsis, dv['leo_ito'])
-    print_deltav("ITO->STO", ito.apoapsis, dv['ito_sto'])
-    print_deltav("STO->GEO", geo.semimaj, dv['sto_geo'])
+    print_deltav("LEO->STO", sto.periapsis, dv['leo_sto'])
+    print_deltav("STO->ITO", ito.apoapsis, dv['sto_ito'])
+    print_deltav("ITO->GEO", geo.semimaj, dv['ito_geo'])
 
 def main(argv):
     """Compute super-synchronous maneuver.
