@@ -1,4 +1,4 @@
 #!/bin/sh
 
 export PYTHONPATH=$(cd ..;pwd)/lib/
-nosetests-3.2 .
+nosetests-3.2 -v .
