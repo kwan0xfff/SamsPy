@@ -35,6 +35,8 @@ mixtures:
     lox-lch4:
         name: LOX/methane
         components: [ LOX, LCH4 ]
+        isp: 360.0      # range 350 to 372, need validation
+        OFR: 2.90       # range 2.55 to 2.95, need validation
     lox-rp1:
         name: LOX/RP-1 # or LOX/kerosene
         OFR: 2.56
