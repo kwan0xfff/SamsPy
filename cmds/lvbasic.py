@@ -5,7 +5,8 @@
 Launch vehicle -- basic analysis.
 """
 
-from getopt import getopt, GetoptError
+from getopt import getopt, GetoptError  # deprecate later
+import argparse
 import sys
 import yaml
 
@@ -20,6 +21,21 @@ def printrow(label, fmt, datalist):
     for item in datalist:
         line = line + ' ' + fmt % item
     sys.stdout.write( line + '\n')
+
+def new_parseargs(argv):
+    "Parse command line arguments."
+
+    usage = "usage: %prog [options] vehicle report"
+    parser = argparse.ArgumentParser()
+    parser.add_argument("spec", help="vehicle spec file")
+    parser.add_argument("prop", help="propellants data file")
+    parser.add_argument("report", help="report file")
+    parser.add_argument("-v", "--verbose", help="increase output verbosity",
+            action="store_true")
+    args = parser.parse_args()
+    if args.verbose:
+        print("verbosity turned on")
+    return args
 
 def parseargs(argv):
     "Parse command line arguments."
