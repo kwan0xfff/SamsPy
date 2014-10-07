@@ -22,14 +22,12 @@ def printrow(label, fmt, datalist):
         line = line + ' ' + fmt % item
     sys.stdout.write( line + '\n')
 
-def new_parseargs(argv):
+def parseargs(argv):
     "Parse command line arguments."
 
-    usage = "usage: %prog [options] vehicle report"
     parser = argparse.ArgumentParser()
-    parser.add_argument("spec", help="vehicle spec file")
-    parser.add_argument("prop", help="propellants data file")
-    parser.add_argument("report", help="report file")
+    parser.add_argument("vehicle", help="vehicle spec file")
+    parser.add_argument("propellants", help="propellants data file")
     parser.add_argument("-v", "--verbose", help="increase output verbosity",
             action="store_true")
     args = parser.parse_args()
@@ -37,7 +35,7 @@ def new_parseargs(argv):
         print("verbosity turned on")
     return args
 
-def parseargs(argv):
+def old_parseargs(argv):
     "Parse command line arguments."
 
     parsed = {}
@@ -65,9 +63,9 @@ def main(argv):
 
     parsed = parseargs(argv)
 
-    fh = open(parsed['vehicle'], 'r')
+    fh = open(parsed.vehicle, 'r')
     design = yaml.load(fh)
-    fh = open(parsed['propellants'], 'r')
+    fh = open(parsed.propellants, 'r')
     propeldb = yaml.load(fh)
 
     staging = multistage.performance(design)
