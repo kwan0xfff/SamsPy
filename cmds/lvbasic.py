@@ -5,7 +5,6 @@
 Launch vehicle -- basic analysis.
 """
 
-from getopt import getopt, GetoptError  # deprecate later
 import argparse
 import sys
 import yaml
@@ -34,29 +33,6 @@ def parseargs(argv):
     if args.verbose:
         print("verbosity turned on")
     return args
-
-def old_parseargs(argv):
-    "Parse command line arguments."
-
-    parsed = {}
-    try:
-        (opts, args) = getopt(argv[1:], "p:h",
-            [ 'propellants', 'help' ])
-    except GetoptError as ex:
-        sys.stderr.write("error: %s\n" % str(ex))
-        sys.exit(1)
-
-    for opt, arg in opts:
-        if opt == '-p' or opt == '--propellants':
-            parsed['propellants'] = arg
-        if opt == '-h' or opt == '--help':
-            parsed['help'] = True
-
-    if len(args) != 1:
-        raise ValueError("Vehicle description YAML required")
-    parsed['vehicle'] = args[0]
-    return parsed
-
 
 def main(argv):
     """Determine basic vehicle propellant and mass parameters of vehicle."""
