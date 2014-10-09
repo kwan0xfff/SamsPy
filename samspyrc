@@ -1,0 +1,10 @@
+# samspyrc - # Initialize environment to run SamsPy scripts.
+#
+# Depending on shell and preference, run one of the following:
+#   . samspyrc
+#   source samspyrc
+# Season to your taste.
+#
+
+export PYTHONPATH=$(pwd)/lib
+echo PYTHONPATH=${PYTHONPATH}
