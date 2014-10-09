@@ -95,15 +95,17 @@ def main(argv):
         GIgnite = thrust / wIgnite
         GBurnout = thrust / wBurnout
 
-        printrow ('massflow (kg/s)', '%11.4f', [mflow])
-        printrow ('burn time (s)', '%11.4f', [burntime])
-        printrow ('G (ignite, burnout)', '%7.3f', [GIgnite, GBurnout])
-        printrow ('thrust (N, lbf)', '%11.4f', [thrust, thrust*N2lb])
-        printrow ('wt ignite (N, lbm)', '%11.4f', [wIgnite, wIgnite*N2lb])
-        printrow ('wt burnout (N, lbm)', '%11.4f', [wBurnout, wBurnout*N2lb])
-        printrow ('deltaV (m/s, ft/s)', '%11.4f', [deltaV, deltaV*m2ft])
-        printrow ('wet mass', '%11.4f', [wetmass, wetmass/lb2kg])
-        printrow ('dry mass', '%11.4f', [drymass, drymass/lb2kg])
+        for label, fmt, values in (
+            ('massflow (kg/s)', '%11.4f', [mflow]),
+            ('burn time (s)', '%11.4f', [burntime]),
+            ('G (ignite, burnout)', '%7.3f', [GIgnite, GBurnout]),
+            ('thrust (N, lbf)', '%11.4f', [thrust, thrust*N2lb]),
+            ('wt ignite (N, lbm)', '%11.4f', [wIgnite, wIgnite*N2lb]),
+            ('wt burnout (N, lbm)', '%11.4f', [wBurnout, wBurnout*N2lb]),
+            ('deltaV (m/s, ft/s)', '%11.4f', [deltaV, deltaV*m2ft]),
+            ('wet mass', '%11.4f', [wetmass, wetmass/lb2kg]),
+            ('dry mass', '%11.4f', [drymass, drymass/lb2kg]), ):
+            printrow (label, fmt, values)
 
     print ('Totals:')
     drytot = multistage.masses(design['stageorder'], stages, mtype='Mdry')
