@@ -52,6 +52,10 @@ mixtures:
         name: NO2/HTPB
         components: [ NO2, HTPB ]
         notes: hybrid.
+    h2O2-rp1:
+        name: H2O2/RP-1
+        OFR: 7.07
+        components: [ H2O2, RP1 ]
 
 #
 # Material properties
@@ -93,5 +97,10 @@ matlprops:
         soldens: 0.9 # kg/L
         meltpt: 341
         notes: pure paraffin (C25H52)
+    H2O2:
+        #liqdens: 1.135 # kg/L - 20 °C, 30% purity
+        liqdens: 1.145 # kg/L - 20 °C, 100% purity
+        boilpt: 423.3 # deg K
+        meltpt: 272.72 # deg K
 
 
