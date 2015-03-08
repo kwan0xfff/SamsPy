@@ -11,15 +11,7 @@ import yaml
 
 from samspy.vehicle import multistage, propel
 from samspy import lb2kg, m2ft, gEarth, N2lb
-
-def printrow(label, fmt, datalist):
-    """Print a report row with label, format, datalist.
-    All labels have a common width.
-    """
-    line = "    %-24s" % label
-    for item in datalist:
-        line = line + ' ' + fmt % item
-    sys.stdout.write( line + '\n')
+from samspy.writers.Text import Text
 
 def parseargs(argv):
     "Parse command line arguments."
@@ -39,6 +31,11 @@ def main(argv):
 
     parsed = parseargs(argv)
 
+    writer = Text(sys.stdout)
+    putrow = writer.putfmtrow
+    putitem = writer.putitem
+    putrow("msglabel", "%8s", [ "hello", "world" ])
+
     fh = open(parsed.vehicle, 'r')
     design = yaml.load(fh)
     fh = open(parsed.propellants, 'r')
@@ -50,14 +47,14 @@ def main(argv):
 
     for activestage in sequence:
         stageinfo = staging[activestage]
-        print ('%-32s Mignite %7.1f Mburnout %7.1f kilo' % (activestage,
+        putitem ('%-32s Mignite %7.1f Mburnout %7.1f kilo' % (activestage,
             stageinfo['Mignite'], stageinfo['Mburnout'] ))
-        print ('%-32s Mignite %7.1f Mburnout %7.1f lbm' % (activestage,
+        putitem ('%-32s Mignite %7.1f Mburnout %7.1f lbm' % (activestage,
             stageinfo['Mignite']/lb2kg, stageinfo['Mburnout']/lb2kg ))
-        print ('%-32s  deltaV %7.1f' % (activestage, stageinfo['deltaV']))
+        putitem ('%-32s  deltaV %7.1f' % (activestage, stageinfo['deltaV']))
 
     deltaV = staging['totalDeltaV']
-    printrow ('Total deltaV (m/s, ft/s)', '%11.4f', [deltaV, deltaV*m2ft])
+    putrow ('Total deltaV (m/s, ft/s)', '%11.4f', [deltaV, deltaV*m2ft])
 
     stages = design['stages']
     for activestage in sequence:
@@ -68,7 +65,7 @@ def main(argv):
         Mpropel = stageinfo['Mignite']-stageinfo['Mburnout']
         propresults = propel.deduce(propeldb, mixture, Mpropel)
 
-        print ('Stage:', activestage)
+        putitem ('Stage: ' + activestage)
         for label, fmt, prop in (
                 ('matl names', '%7s', 'matlNames'),
                 ('liqdens (kg/l)', '%7.3f', 'liqdens'),
@@ -79,9 +76,9 @@ def main(argv):
                 results.append('[sum]')
             elif prop in ('masses', 'volumes'):
                 results.append(sum(propresults[prop]))
-            printrow (label, fmt, results)
+            putrow (label, fmt, results)
         avgdens = sum(propresults['masses'])/sum(propresults['volumes'])
-        printrow ('avg dens (kg/l)', '%11.4f', [avgdens])
+        putrow ('avg dens (kg/l)', '%11.4f', [avgdens])
 
         # compute thrust based on stageinfo['Mburnout']
         thrust = stageinfo['Mburnout'] * gEarth * maxG
@@ -105,11 +102,11 @@ def main(argv):
             ('deltaV (m/s, ft/s)', '%11.4f', [deltaV, deltaV*m2ft]),
             ('wet mass', '%11.4f', [wetmass, wetmass/lb2kg]),
             ('dry mass', '%11.4f', [drymass, drymass/lb2kg]), ):
-            printrow (label, fmt, values)
+            putrow (label, fmt, values)
 
-    print ('Totals:')
+    putitem ('Totals:')
     drytot = multistage.masses(design['stageorder'], stages, mtype='Mdry')
-    printrow ('dry mass', '%11.4f', [drytot, drytot/lb2kg])
+    putrow ('dry mass', '%11.4f', [drytot, drytot/lb2kg])
 
 
 sys.exit(main(sys.argv))
