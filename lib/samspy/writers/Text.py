@@ -19,11 +19,11 @@ class Text:
         """
         self.outstrm.write( item + '\n')
  
-    def putfmtrow(self, label, fmt, datalist):
+    def putfmtrow(self, label, fmt, datalist, labelfmt="%-24s"):
         """Write a report row with label, format, datalist.
         All labels have a common width.
         """
-        line = "    %-24s" % label
+        line = ("    "+labelfmt) % label
         for item in datalist:
             line = line + ' ' + fmt % item
         self.outstrm.write( line + '\n')
