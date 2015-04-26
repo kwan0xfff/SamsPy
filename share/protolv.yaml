@@ -5,6 +5,7 @@
 name:  Prototype LV
 stageorder: [ Proto LV-1, Proto LV-2, Proto LV-3, payload ]
 maxG: 3.0
+gRange: [2.0, 3.0]
 stages:
     Proto LV-1:
         Mwet: 17934.0 # kg
