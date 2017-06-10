@@ -100,19 +100,26 @@ the vehicle description file.
 The first part of the shows the masses of the launch vehicle at stage ignition and burnout,
 and the resulting velocity change (deltaV)::
 
-    Proto LV-1                       Mignite 23693.0 Mburnout  8645.0 kilo
-    Proto LV-1                       Mignite 52234.1 Mburnout 19059.0 lbm
-    Proto LV-1                        deltaV  2896.9
-    Proto LV-2                       Mignite  5759.0 Mburnout  1844.0 kilo
-    Proto LV-2                       Mignite 12696.4 Mburnout  4065.3 lbm
-    Proto LV-2                        deltaV  3238.7
-    Proto LV-3                       Mignite  1428.0 Mburnout   646.0 kilo
-    Proto LV-3                       Mignite  3148.2 Mburnout  1424.2 lbm
-    Proto LV-3                        deltaV  2279.2
-    payload                          Mignite   443.0 Mburnout   443.0 kilo
-    payload                          Mignite   976.6 Mburnout   976.6 lbm
-    payload                           deltaV     0.0
+    Performance summary
+      During stage: Proto LV-1
+        Mignite (kg, lbm)         23693.0000  52234.1238
+        Mburnout (kg, lbm)         8645.0000  19058.9626
+        deltaV (m/s, ft/s)         2896.9057   9504.2837
+      During stage: Proto LV-2
+        Mignite (kg, lbm)          5759.0000  12696.4217
+        Mburnout (kg, lbm)         1844.0000   4065.3241
+        deltaV (m/s, ft/s)         3238.7418  10625.7932
+      During stage: Proto LV-3
+        Mignite (kg, lbm)          1428.0000   3148.2011
+        Mburnout (kg, lbm)          646.0000   1424.1862
+        deltaV (m/s, ft/s)         2279.2280   7477.7823
+      During stage: payload
+        Mignite (kg, lbm)           443.0000    976.6478
+        Mburnout (kg, lbm)          443.0000    976.6478
+        deltaV (m/s, ft/s)            0.0000      0.0000
+    Total deltaV
         Total deltaV (m/s, ft/s)   8414.8755  27607.8592
+
 
 The initial mass of the vehicle is 23,693 kg (52,234.1 lbm);
 this is the culmulative gross mass of all the stages.
@@ -124,7 +131,8 @@ Note, however,
 So actual deltaV is likely somewhat lower.
 Furthermore, the engines are not throttled; they burn at full thrust until burnout.
 
-The second part of the output gives details on each stage.
+The second part of the output gives details on each stage,
+and a final summary of total wet and dry masses.
 Knowing the densities of the propellants, and the oxidizer/fuel ratios,
 it is possible to compute their masses and volumes.
 Using LOX/RP-1, it can be seen that the LOX tanks need to be
@@ -132,7 +140,8 @@ about twice the size of the RP-1 tanks.
 
 The detailed output appears as follows::
 
-    Stage: Proto LV-1
+    Stage details
+      Stage: Proto LV-1
         matl names                   LOX     RP1   [sum]
         liqdens (kg/l)             1.141   0.910
         masses (kg)              10821.034 4226.966 15048.000
@@ -147,7 +156,7 @@ The detailed output appears as follows::
         deltaV (m/s, ft/s)         2896.9057   9504.2837
         wet mass                  23693.0000  52234.1238
         dry mass                   8645.0000  19058.9626
-    Stage: Proto LV-2
+      Stage: Proto LV-2
         matl names                   LOX     RP1   [sum]
         liqdens (kg/l)             1.141   0.910
         masses (kg)              2815.281 1099.719 3915.000
@@ -162,7 +171,7 @@ The detailed output appears as follows::
         deltaV (m/s, ft/s)         3238.7418  10625.7932
         wet mass                   5759.0000  12696.4217
         dry mass                   1844.0000   4065.3241
-    Stage: Proto LV-3
+      Stage: Proto LV-3
         matl names                   LOX     RP1   [sum]
         liqdens (kg/l)             1.141   0.910
         masses (kg)              562.337 219.663 782.000
@@ -177,8 +186,9 @@ The detailed output appears as follows::
         deltaV (m/s, ft/s)         2279.2280   7477.7823
         wet mass                   1428.0000   3148.2011
         dry mass                    646.0000   1424.1862
-    Totals:
+    Total masses:
         dry mass                   3948.0000   8703.8501
+        wet mass                  23693.0000  52234.1238
 
 Burn times for the three stages are 170, 205, and 118 seconds.
 Since the engines burn at full thrust the entire time,
@@ -190,7 +200,12 @@ and the second stage would be waging a losing battle against gravity.
 Fortunately, the first stage typically starts off vertically,
 but after a minute or so has a significant horizontal component.
 
-The last reported number is the cumulative dry mass of the vehicle.
-That is, before propellants are pumped into it,
-this is what ground transport vehicles must support for the fully assembled,
+The last reported numbers are the cumulative dry and wet mass of the vehicle.
+That is, before propellants are pumped into it and afterwards.
+The first is what ground transport vehicles must support for the fully assembled,
 but empty vehicle.
+The second is what the vehicle supports (e.g., clamps, launch rail, pylon, whatever)
+of the launch system must support before ignition.
+Naturally, this does not include the effects of the rocket exhaust against
+the support system.
+
