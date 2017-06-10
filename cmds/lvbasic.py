@@ -34,7 +34,7 @@ def main(argv):
     writer = Text(sys.stdout)
     putrow = writer.putfmtrow
     putitem = writer.putitem
-    putrow("msglabel", "%8s", [ "hello", "world" ])
+    #putrow("msglabel", "%8s", [ "hello", "world" ])
 
     fh = open(parsed.vehicle, 'r')
     design = yaml.load(fh)
@@ -45,18 +45,22 @@ def main(argv):
     sequence = design['stageorder']
     maxG = design['maxG']
 
+    putitem('Performance summary')
     for activestage in sequence:
-        stageinfo = staging[activestage]
-        putitem ('%-32s Mignite %7.1f Mburnout %7.1f kilo' % (activestage,
-            stageinfo['Mignite'], stageinfo['Mburnout'] ))
-        putitem ('%-32s Mignite %7.1f Mburnout %7.1f lbm' % (activestage,
-            stageinfo['Mignite']/lb2kg, stageinfo['Mburnout']/lb2kg ))
-        putitem ('%-32s  deltaV %7.1f' % (activestage, stageinfo['deltaV']))
-
+        stage = staging[activestage]
+        mIgnite = stage['Mignite']
+        mBurnout = stage['Mburnout']
+        dV = stage['deltaV']
+        putitem('  During stage: ' + activestage)
+        putrow('Mignite (kg, lbm)', '%11.4f', [mIgnite, mIgnite/lb2kg])
+        putrow('Mburnout (kg, lbm)', '%11.4f', [mBurnout, mBurnout/lb2kg])
+        putrow('deltaV (m/s, ft/s)', '%11.4f', [dV, dV*m2ft])
     deltaV = staging['totalDeltaV']
+    putitem('Total deltaV')
     putrow ('Total deltaV (m/s, ft/s)', '%11.4f', [deltaV, deltaV*m2ft])
 
     stages = design['stages']
+    putitem('Stage details')
     for activestage in sequence:
         stageinfo = staging[activestage]
         if 'Isp' not in stages[activestage] or stages[activestage]['Isp'] == 0:
@@ -65,7 +69,7 @@ def main(argv):
         Mpropel = stageinfo['Mignite']-stageinfo['Mburnout']
         propresults = propel.deduce(propeldb, mixture, Mpropel)
 
-        putitem ('Stage: ' + activestage)
+        putitem ('  Stage: ' + activestage)
         for label, fmt, prop in (
                 ('matl names', '%7s', 'matlNames'),
                 ('liqdens (kg/l)', '%7.3f', 'liqdens'),
@@ -104,10 +108,11 @@ def main(argv):
             ('dry mass', '%11.4f', [drymass, drymass/lb2kg]), ):
             putrow (label, fmt, values)
 
-    putitem ('Totals:')
+    putitem ('Total masses:')
     drytot = multistage.masses(design['stageorder'], stages, mtype='Mdry')
+    wettot = multistage.masses(design['stageorder'], stages, mtype='Mwet')
     putrow ('dry mass', '%11.4f', [drytot, drytot/lb2kg])
-
+    putrow ('wet mass', '%11.4f', [wettot, wettot/lb2kg])
 
 sys.exit(main(sys.argv))
 
