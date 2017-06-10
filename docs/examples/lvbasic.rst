@@ -85,9 +85,11 @@ be found.  This allows the command to execute Python code such as::
 
 Using the example files provided in the source code, the command executed is::
 
-    $ cmds/lvbasic.py -p share/propellants.yaml share/protolv.yaml
+    $ cmds/lvbasic.py share/protolv.yaml share/propellants.yaml
 
-The ``-p`` flag points to the file with propellant information.
+The second argument points to a simple compendium of propellant information,
+including mixture names, ratios, and the component liquid densities.
+
 
 Program output
 ==============

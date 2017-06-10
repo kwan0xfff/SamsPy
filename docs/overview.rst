@@ -33,7 +33,7 @@ of the SamsPy source tree::
 
 Then if executed from there::
 
-  $ cmds/lvbasic.py -p share/propellants.yaml share/protolv.yaml
+  $ cmds/lvbasic.py share/protolv.yaml share/propellants.yaml
 
 The result should be a listing of propellant and performance data for
 each stage, along with the delta V (velocity change) achievable from
