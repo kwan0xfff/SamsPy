@@ -1,10 +1,13 @@
-README for SamsPy
-=================
+SamsPy: Simple Aerospace ModelS in Python
+=========================================
+
+Version: 0.0.1
 
 *SamsPy* is a collection of simple aerospace models in Python.
 (Anyway, that's the plan.)
 
-It has been developed on Linux (Ubuntu 12.04) and Mac OS X (Mavericks)
+It has been developed on Linux (Ubuntu 12.04, now 16.04)
+and Mac OS X (Mavericks, now Sierra)
 using Python 3 and the corresponding YAML and Nose packages.
 
 More details are given in the file ``docs/overview.rst``.
