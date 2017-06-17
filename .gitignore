@@ -1,1 +1,6 @@
 *.pyc
+*.html
+*.swp
+*~
+.idea
+tmp/
