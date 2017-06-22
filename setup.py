@@ -17,7 +17,7 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='samspy',
-    version='0.0.2.dev',
+    version='0.0.2',
     description='Simple Aerospace ModelS in Python',
     long_description=long_description,
     url='https://github.com/kwan0xfff/SamsPy',
