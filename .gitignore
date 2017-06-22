@@ -2,5 +2,12 @@
 *.html
 *.swp
 *~
-.idea
 tmp/
+
+# packaging
+build/
+dist/
+*.egg-info/
+
+# IDE info
+.idea
