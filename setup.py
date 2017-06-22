@@ -17,8 +17,8 @@ with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
 
 setup(
     name='samspy',
-    version='0.0.1',
-    description='A sample Python project',
+    version='0.0.2.dev',
+    description='Simple Aerospace ModelS in Python',
     long_description=long_description,
     url='https://github.com/kwan0xfff/SamsPy',
     author='Rick Kwan',
@@ -39,29 +39,15 @@ setup(
     packages=find_packages(exclude=['contrib', 'docs', 'tests']),
     install_requires=['PyYAML'],
 
-    #% From here, adding annotations with '#%' for things to be
-    #% addressed in the near future.
+    # Example data files
+    package_data={
+        '': ['share/*.yaml'],
+    },
 
-    # additional groups of dependencies, e.g.,
-    # $ pip install -e .[dev,test]
-    #%extras_require={
-    #%    'dev': ['check-manifest'],
-    #%    'test': ['coverage'],
-    #%},
-
-    # Data files.
-    #%package_data={
-    #%    'sample': ['package_data.dat'],
-    #%},
-
-    # Alternative approach for data.  See:
-    # http://docs.python.org/3.4/distutils/setupscript.html#installing-additional-files # noqa
-    #%data_files=[('my_data', ['data/data_file'])],
-
-    # Executable scripts, entry points;
-    #$entry_points={
-    #$    'console_scripts': [
-    #$        'sample=sample:main',
-    #$    ],
-    #$},
+    # Executable scripts, entry points
+    entry_points={
+        'console_scripts': [
+            'lvbasic=samspy.cmds.lvbasic:main',
+        ],
+    },
 )
