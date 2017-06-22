@@ -15,6 +15,10 @@ and Mac OS X (via MacPorts) are given at the bottom of this write-up.  (See
 Example
 =======
 
+Note: this version of the overview was written for SamsPy v0.0.1,
+and does not reflect the re-arrangement of the source files.
+It needs to be modified for version v0.0.2.
+
 Examples of user input are provided in the *share* subdirectory as YAML files.
 
   * *propellants.yaml* is a selection of possible propellant combinations.
