@@ -90,8 +90,9 @@ def main(argv):
         wBurnout = stageinfo['Mburnout'] * gEarth
         deltaV = stageinfo['deltaV']
         mflow = thrust / (stageinfo['Isp'] * gEarth)
-        wetmass = stageinfo['Mignite']
-        drymass = stageinfo['Mburnout']
+        mInit = stageinfo['Mignite']
+        mFini = stageinfo['Mburnout']
+        smDry = stages[activestage]['Mdry']
         burntime = Mpropel / mflow
         GIgnite = thrust / wIgnite
         GBurnout = thrust / wBurnout
@@ -103,9 +104,10 @@ def main(argv):
             ('thrust (N, lbf)', '%11.4f', [thrust, thrust*N2lb]),
             ('wt ignite (N, lbm)', '%11.4f', [wIgnite, wIgnite*N2lb]),
             ('wt burnout (N, lbm)', '%11.4f', [wBurnout, wBurnout*N2lb]),
-            ('deltaV (m/s, ft/s)', '%11.4f', [deltaV, deltaV*m2ft]),
-            ('wet mass', '%11.4f', [wetmass, wetmass/lb2kg]),
-            ('dry mass', '%11.4f', [drymass, drymass/lb2kg]), ):
+            ('mass init (kg, lbm)', '%11.4f', [mInit, mInit/lb2kg]),
+            ('mass fini (kg, lbm)', '%11.4f', [mFini, mFini/lb2kg]),
+            ('stage dry (kg, lbm)', '%11.4f', [smDry, smDry/lb2kg]),
+            ('deltaV (m/s, ft/s)', '%11.4f', [deltaV, deltaV*m2ft]), ):
             putrow (label, fmt, values)
 
     putitem ('Total masses:')
