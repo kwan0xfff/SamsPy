@@ -1,6 +1,10 @@
 SamsPy: Simple Aerospace ModelS in Python
 =========================================
 
+Note (May 2021): a new development for SamsPy has been outlined in the wiki at
+``https://github.com/kwan0xfff/SamsPy/wiki/DevPlan``.
+Refer to that for anticipated changes.
+
 Version: 0.0.2
 
 *SamsPy* is a collection of simple aerospace models in Python.
